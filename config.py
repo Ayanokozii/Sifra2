@@ -7,11 +7,11 @@ from pyrogram import filters
 load_dotenv()
 
 
-API_ID = int(getenv("API_ID", "9696783"))
+API_ID = int(getenv("API_ID", "21189715"))
 
-API_HASH = getenv("API_HASH", "3e74a9830493e9261410a947428dbb34")
+API_HASH = getenv("API_HASH", "988a9111105fd2f0c5e21c2c2449edfd")
 
-BOT_TOKEN = getenv("BOT_TOKEN",)
+BOT_TOKEN = getenv("BOT_TOKEN","7026867682:AAFycHPHsYqgPAocCrzqjhmyuS1JITJ6DE4")
 
 MONGO_DB_URI = getenv("MONGO_DB_URI", "mongodb+srv://ayanosuvii0925:subhichiku123@cluster0.uw8yxkl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
@@ -21,7 +21,7 @@ SONG_DOWNLOAD_DURATION = int(
     getenv("SONG_DOWNLOAD_DURATION_LIMIT", "54000")
 )
 
-LOGGER_ID = int(getenv("LOGGER_ID", "-1001903467885"))
+LOGGER_ID = int(getenv("LOGGER_ID", "-1001956979385"))
 
 OWNER_ID = int(getenv("OWNER_ID", "7181106700"))
 
@@ -42,7 +42,7 @@ GIT_TOKEN = getenv(
     "GIT_TOKEN", None
 )  # Fill this variable if your upstream repository is private
 
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/PAHADI_VERSE")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/the_galaxiess")
 SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+nEoo6WTfNTdmZjRl")
 
 AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", False))
@@ -66,7 +66,7 @@ TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", 1073741824))
 
 
 # Get your pyrogram v2 session from @Shsusu_bot on Telegram
-STRING1 = getenv("STRING_SESSION",  None)
+STRING1 = getenv("STRING_SESSION",  "BQFDVFMAUfdfYKLuy3xKlT9Vi5xu3Ch2Juz34jwR-qpWv4iRDtWK-3edMY7s4harMZKyGMVgTGhFjgFwIvJApXlHIYORgTw6LT0xEzuUtx4dw8Ry6y5PV1W5OvnL5-3uorKryTG71z4iIMQrCh978qEut6gRn0SwdDlNtDsomPGtkmIwlpWxCsRtf6KiFgLDxqy1dT7oq8pHe1Q006qc4SL2CT8AH8-bWtD7m_jpxEyfmYFECYbp-MkRG4GI2hpxXLkFziStnyfFbU1rq-Izi-dBHcYJNMM_ym4pQv5PWgz9e44i4U-SfwQvo75ZceBx7qQzlkGAcfB4vReRMfLVK_TsukvgAAAAGSN1vtAA")
 STRING2 = getenv("STRING_SESSION2", None)
 STRING3 = getenv("STRING_SESSION3", None)
 STRING4 = getenv("STRING_SESSION4", None)
