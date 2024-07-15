@@ -7,7 +7,7 @@ from ..logging import LOGGER
 assistants = []
 assistantids = []
 
-class Userbot(Client):
+class Userbot:
     def __init__(self):
         self.one = Client(
             name="SifraAss1",
@@ -46,7 +46,7 @@ class Userbot(Client):
         )
 
     async def start(self):
-        LOGGER(__name__).info(f"Gettings Assistants Info...")
+        LOGGER(__name__).info(f"Getting Assistants Info...")
         await self.start_assistant(self.one, config.STRING1, "Assistant One")
         await self.start_assistant(self.two, config.STRING2, "Assistant Two")
         await self.start_assistant(self.three, config.STRING3, "Assistant Three")
@@ -84,3 +84,19 @@ class Userbot(Client):
 
 # Example usage
 userbot = Userbot()
+
+# Example of using struct.unpack correctly
+# Assuming you have a binary buffer of 271 bytes
+
+def unpack_example():
+    format_string = 'I I I 256s ? ?'
+    data = b'\x01\x00\x00\x00\x02\x00\x00\x00\x03\x00\x00\x00' + b'A' * 256 + b'\x01' + b'\x00'
+
+    if len(data) != struct.calcsize(format_string):
+        raise ValueError(f"Data length {len(data)} does not match expected length {struct.calcsize(format_string)}")
+
+    dc_id, api_id, test_mode, auth_key, user_id, is_bot = struct.unpack(format_string, data)
+    print(dc_id, api_id, test_mode, auth_key, user_id, is_bot)
+
+# Call the unpack example function
+unpack_example()
