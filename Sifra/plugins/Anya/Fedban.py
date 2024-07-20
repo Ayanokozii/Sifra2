@@ -1,6 +1,6 @@
 """
 Copyright (c) 2024 @Ayano_sagar_121
-Copyright (c) 2024 @Alone_Ayano_bot
+Copyright (c) 2024 @Sifrababybot
 """
 
 import uuid
