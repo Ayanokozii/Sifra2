@@ -29,8 +29,8 @@ async def must_join_channel(app: Client, msg: Message):
                                 InlineKeyboardButton("</> ᴍᴜsɪᴄ ʙᴏᴛ[❣️]", url=f"https://t.me/Sifrababybot?startgroup=true"),
                             ],
                             [
-                                InlineKeyboardButton("</> sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ[❣️]", url=link),
-                                InlineKeyboardButton("</> ᴄʜᴀɴɴᴇʟ ᴄʜᴀᴛ[❣️]", url=f"https://t.me/galaxiess_updates"),
+                                InlineKeyboardButton("</> sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ[❣️]", url=f"https://t.me/+LK5aT4-QvgFmMDFl"),
+                                InlineKeyboardButton("</> ᴄʜᴀɴɴᴇʟ ᴄʜᴀᴛ[❣️]", url=f"II_ayano_II"),
                             ],
                         ]
                     )
