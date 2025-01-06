@@ -2,13 +2,17 @@
 #<<<<<<<<<<<<<<Give<Credit<Else>You>Chutiya>>>>>>>>>>>>>>#
 import os
 from PIL import ImageDraw, Image, ImageFont, ImageChops
-from pyrogram import *
-from pyrogram.types import *
+from pyrogram import Client, filters
+from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
 from logging import getLogger
-from Sifra import app
 
+# Initialize logger
 LOGGER = getLogger(__name__)
 
+# Initialize the bot client
+app = Client("Sifra")
+
+# Database class for storing welcome messages
 class WelDatabase:
     def __init__(self):
         self.data = {}
@@ -25,7 +29,8 @@ class WelDatabase:
 
 wlcm = WelDatabase()
 
-class temp:
+# Temporary storage for bot state
+class Temp:
     ME = None
     CURRENT = 2
     CANCEL = False
@@ -33,6 +38,9 @@ class temp:
     U_NAME = None
     B_NAME = None
 
+temp = Temp()
+
+# Function to make a circular profile picture
 def circle(pfp, size=(500, 500)):
     pfp = pfp.resize(size, Image.LANCZOS).convert("RGBA")
     bigsize = (pfp.size[0] * 3, pfp.size[1] * 3)
@@ -44,7 +52,7 @@ def circle(pfp, size=(500, 500)):
     pfp.putalpha(mask)
     return pfp
 
-
+# Function to create a welcome image
 def welcomepic(pic, user, chatname, id, uname):
     background = Image.open("Sifra/assets/Ayano.png")
     pfp = Image.open(pic).convert("RGBA")
@@ -61,6 +69,7 @@ def welcomepic(pic, user, chatname, id, uname):
     background.save(f"downloads/welcome#{id}.png")
     return f"downloads/welcome#{id}.png"
 
+# Event handler for when a chat member is updated
 @app.on_chat_member_updated(filters.group, group=-3)
 async def greet_group(_, member: ChatMemberUpdated):
     chat_id = member.chat.id
@@ -71,6 +80,7 @@ async def greet_group(_, member: ChatMemberUpdated):
         or member.old_chat_member
     ):
         return
+
     user = member.new_chat_member.user if member.new_chat_member else member.from_user
     try:
         pic = await app.download_media(
@@ -78,11 +88,13 @@ async def greet_group(_, member: ChatMemberUpdated):
         )
     except AttributeError:
         pic = "Sifra/assets/Ayano.png"
-    if (temp.MELCOW).get(f"welcome-{member.chat.id}") is not None:
+
+    if temp.MELCOW.get(f"welcome-{member.chat.id}") is not None:
         try:
             await temp.MELCOW[f"welcome-{member.chat.id}"].delete()
         except Exception as e:
             LOGGER.error(e)
+
     try:
         welcomeimg = welcomepic(
             pic, user.first_name, member.chat.title, user.id, user.username
@@ -98,25 +110,34 @@ Iᴅ ✧ {user.id}
 Usᴇʀɴᴀᴍᴇ ✧ @{user.username}
 ➖➖➖➖➖➖➖➖➖➖➖➖
 """,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f"⦿ ᴀᴅᴅ ᴍᴇ ⦿", url=f"https://t.me/Sifrababybot?startgroup=true")]])
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton(f"⦿ ᴀᴅᴅ ᴍᴇ ⦿", url=f"https://t.me/Sifrababybot?startgroup=true")]]
+            )
         )
     except Exception as e:
         LOGGER.error(e)
+
     try:
         os.remove(f"downloads/welcome#{user.id}.png")
         os.remove(f"downloads/pp{user.id}.png")
     except Exception as e:
         pass
 
+# Event handler for new chat members
 @app.on_message(filters.new_chat_members & filters.group, group=-1)
 async def bot_wel(_, message):
     for u in message.new_chat_members:
         if u.id == app.me.id:
-            await app.send_message(LOG_CHANNEL_ID, f"""
+            await app.send_message(
+                "LOG_CHANNEL_ID", f"""
 NEW GROUP
 ➖➖➖➖➖➖➖➖➖➖➖➖
 NAME: {message.chat.title}
 ID: {message.chat.id}
 USERNAME: @{message.chat.username}
 ➖➖➖➖➖➖➖➖➖➖➖➖
-""")
+"""
+            )
+
+# Run the bot
+app.run()
