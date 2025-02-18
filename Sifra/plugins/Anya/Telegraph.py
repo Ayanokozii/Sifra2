@@ -1,56 +1,62 @@
-import os, asyncio
+import os
+import asyncio
 from typing import Optional
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, CallbackQuery
 from telegraph import upload_file
 from Sifra import app
 
-
-#---------------FUNCTION---------------#
+# ---------------FUNCTION---------------#
 
 def get_file_id(msg: Message) -> Optional[Message]:
     if not msg.media:
         return None
 
     for message_type in ("photo", "animation", "audio", "document", "video", "video_note", "voice", "sticker"):
-        obj = getattr(msg, message_type)
+        obj = getattr(msg, message_type, None)
         if obj:
             setattr(obj, "message_type", message_type)
             return obj
+    return None
 
-#---------------FUNCTION---------------#
-
+# ---------------FUNCTION---------------#
 
 @app.on_message(filters.command("tgm"))
-async def telegraph_upload(bot, update):
-    replied = update.reply_to_message
+async def telegraph_upload(client: Client, message: Message):
+    replied = message.reply_to_message
     if not replied:
-        return await update.reply_text("Rᴇᴘʟʏ Tᴏ A Pʜᴏᴛᴏ Oʀ Vɪᴅᴇᴏ Uɴᴅᴇʀ 5ᴍʙ")
+        return await message.reply_text("Reply to a photo or video under 5MB.")
+
     file_info = get_file_id(replied)
     if not file_info:
-        return await update.reply_text("Not Supported!")
-    text = await update.reply_text(text="<code>Downloading To My Server ...</code>", disable_web_page_preview=True)   
-    media = await update.reply_to_message.download()   
-    await text.edit_text(text="<code>Downloading Completed. Now I am Uploading to telegra.ph Link ...</code>", disable_web_page_preview=True)                                            
+        return await message.reply_text("Not Supported!")
+
+    text = await message.reply_text("<code>Downloading to my server...</code>", disable_web_page_preview=True)
+    media = await replied.download()
+
+    await text.edit_text("<code>Download complete. Uploading to telegra.ph...</code>")
+
     try:
-        response = upload_file(media)
+        loop = asyncio.get_running_loop()
+        response = await loop.run_in_executor(None, upload_file, media)
     except Exception as error:
         print(error)
-        await text.edit_text(text=f"Error :- {error}", disable_web_page_preview=True)       
-        return    
+        return await text.edit_text(f"Error: {error}")
+
     try:
         os.remove(media)
     except Exception as error:
         print(error)
-        return    
+
     await text.edit_text(
-        text=f"<b>ʜᴇʀᴇ ɪs ʏᴏᴜʀ ɢᴇɴᴇʀᴀᴛᴇᴅ ᴛᴇ.ʟᴇɢʀᴀ.ᴘʜ ʟɪɴᴋ 💞 :-</b>\n\n<code>https://te.legra.ph{response[0]}</code>",
+        text=f"<b>Here is your generated Telegra.ph link:</b>\n\n"
+             f"<code>https://te.legra.ph{response[0]}</code>",
         disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup( [[
-            InlineKeyboardButton(text="ᴏᴘᴇɴ ʟɪɴᴋ", url=f"https://te.legra.ph{response[0]}"),
-            InlineKeyboardButton(text="sʜᴀʀᴇ ʟɪɴᴋ", url=f"https://telegram.me/share/url?url=https://te.legra.ph{response[0]}")
-            ],[
-            InlineKeyboardButton(text="✗ ᴄʟᴏsᴇ ✗", callback_data="close")
-            ]])
-        )
-    
+        reply_markup=InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton("Open Link", url=f"https://te.legra.ph{response[0]}"),
+                InlineKeyboardButton("Share Link", url=f"https://telegram.me/share/url?url=https://te.legra.ph{response[0]}")
+            ],
+            [InlineKeyboardButton("✗ Close ✗", callback_data="close")]
+        ])
+    )
