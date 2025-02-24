@@ -25,12 +25,12 @@
       "BOT_TOKEN": {
         "description": "A Bot's token from Botfather",
         "value": "",
-        "required": true
+        "required": false
       },
       "MONGO_DB_URI": {
         "description": "Get a mongodb url from https://cloud.mongodb.com.",
         "value": "",
-        "required": true
+        "required": false
       },
       "OWNER_ID": {
         "description": "The user id of user whom you would like to add as OWNER.",
@@ -40,7 +40,7 @@
       "STRING_SESSION": {
         "description": "A Pyrogram v2 String Session from @Shsusu_bot on Telegram.",
         "value": "",
-        "required": true
+        "required": false
       },
       "HEROKU_API_KEY": {
         "description": "Your Heroku account's API key",
