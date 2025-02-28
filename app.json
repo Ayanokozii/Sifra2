@@ -1,5 +1,5 @@
 {
-    "name": "˹ᴀᴀʀᴏʜɪ ˼ [V2]",
+    "name": "˹sifra ˼ [V2]",
     "description": "A Telegram Music Player Bot, written in Python with Pyrogram and Py-Tgcalls.",
     "logo": "https://telegra.ph/file/312bf3022b3f673cdf374.jpg",
     "keywords": [
@@ -15,12 +15,12 @@
       "API_ID": {
         "description": "Get this value from https://my.telegram.org",
         "value": "",
-        "required": true
+        "required": false
       },
       "API_HASH": {
         "description": "Get this value from https://my.telegram.org",
         "value": "",
-        "required": true
+        "required": false
       },
       "BOT_TOKEN": {
         "description": "A Bot's token from Botfather",
@@ -34,8 +34,8 @@
       },
       "OWNER_ID": {
         "description": "The user id of user whom you would like to add as OWNER.",
-        "value": "2107529793",
-        "required": true
+        "value": "",
+        "required": false
       },
       "STRING_SESSION": {
         "description": "A Pyrogram v2 String Session from @Shsusu_bot on Telegram.",
@@ -55,7 +55,7 @@
       "LOGGER_ID": {
         "description": "Your Log Group ID, add your bot and promote as an admin with full rights!. Channel ki id mat daal dena bsdk.",
         "value": "",
-        "required": true
+        "required": false
       }
     },
     "buildpacks": [
